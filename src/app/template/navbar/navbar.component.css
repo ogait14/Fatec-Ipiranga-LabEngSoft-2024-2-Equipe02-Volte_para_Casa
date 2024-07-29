@@ -1,0 +1,21 @@
+.navbar-custom {
+    background-color: #ae78d4; /*cor do navbar*/
+}
+.navbar-brand, .nav-link {
+    color: rgb(0, 0, 0);
+}
+.nav-link {
+    margin-right: 1em;
+}
+.navbar-brand {
+    font-weight: bold;
+}
+.navbar .navbar-toggler {
+    border-color: transparent;
+}
+.navbar .navbar-toggler-icon {
+    color: rgb(0, 0, 0);
+}
+.rounded-5 {
+    border-radius: 5px;
+}

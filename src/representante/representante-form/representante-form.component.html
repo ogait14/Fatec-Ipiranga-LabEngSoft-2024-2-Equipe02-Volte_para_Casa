@@ -1,0 +1,57 @@
+ <div class="container">
+    <div class="row">
+      <!-- Foto do responsável -->
+      <div class="col-md-4">
+        <div class="photo-container">
+          <img src="assets/placeholder-image.jpg" alt="Foto do responsável" class="photo">
+          <input type="file" class="photo-input" required>
+        </div>
+      </div>
+  
+      <!-- Formulário do responsável -->
+      <div class="col-md-8">
+        <form>
+          <div class="form-group">
+            <label for="nome-completo">Nome Completo</label>
+            <input type="text" class="form-control" id="nome-completo" placeholder="Digite o nome completo" required>
+          </div>
+          <div class="form-group">
+            <label for="endereco">Endereço</label>
+            <input type="text" class="form-control" id="endereco" placeholder="Digite o endereço" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" class="form-control" id="email" placeholder="Digite o e-mail" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="tel" class="form-control" id="telefone" placeholder="Digite o telefone" required>
+          </div>
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" required>
+          </div>
+          <div class="form-group">
+            <label for="estado-civil">Estado Civil</label>
+            <input type="text" class="form-control" id="estado-civil" placeholder="Digite o estado civil" required>
+          </div>
+          <div class="form-group">
+            <label for="documento">Documento Comprobatório</label>
+            <input type="file" class="form-control-file" id="documento" required>
+          </div>
+          
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="termos" required>
+            <label class="form-check-label" for="termos">
+                O responsável legal declara ter lido, entendido todas as regras, condições e obrigações estabelecidas no presente termo, bem como autoriza e consente expressamente a divulgação de seus dados nos termos da LGPD (Lei Geral de Proteção de Dados).
+            </label>
+          </div>
+          
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-danger mr-2">Negar</button>
+            <button type="submit" class="btn btn-success">Autorizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

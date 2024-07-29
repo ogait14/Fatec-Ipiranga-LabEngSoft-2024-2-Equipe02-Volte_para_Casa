@@ -1,0 +1,38 @@
+<div class="pagamento-container">
+  <h1>Selecione a forma de pagamento</h1>
+  <div class="payment-options">
+    <button [class.active]="selectedPayment === 'cartao'" (click)="selectPayment('cartao')">
+      Cartão
+    </button>
+    <button [class.active]="selectedPayment === 'pix'" (click)="selectPayment('pix')">
+      Pix
+    </button>
+  </div>
+
+  <form *ngIf="selectedPayment === 'cartao'">
+    <label>
+      Nome pagante
+      <input type="text"  name="nomePagante" />
+    </label>
+    <label>
+      Número cartão
+      <input type="text"  name="numeroCartao" />
+    </label>
+    <label>
+      Validade
+      <input type="text"  name="validade" />
+    </label>
+    <label>
+      Código segurança - CVV
+      <input type="text" name="cvv" />
+    </label>
+    <label>
+      CEP cobrança
+      <input type="text" name="cep" />
+    </label>
+    <div class="buttons">
+      <button type="button" (click)="cancel()">Cancelar</button>
+      <button type="submit" (click)="confirm()">Confirmar</button>
+    </div>
+  </form>
+</div>
