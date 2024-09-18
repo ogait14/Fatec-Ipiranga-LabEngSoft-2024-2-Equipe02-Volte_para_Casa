@@ -1,57 +1,283 @@
- <div class="container">
+<div id="repForm" *ngIf="!editando">
+  <div class="container col-6 col-md-8">
     <div class="row">
+  
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+      <div class="alert alert-danger" *ngFor="let erro of errors">
+        {{ erro }}
+      </div>
       <!-- Foto do responsável -->
-      <div class="col-md-4">
-        <div class="photo-container">
-          <img src="assets/placeholder-image.jpg" alt="Foto do responsável" class="photo">
-          <input type="file" class="photo-input" required>
+      <div>
+        <div class="image-container-right2">
+          <div class="image-container2" (click)="editMode ? fileInput.click() : null">
+              <img id="selectedImage" class="user-image-right" [src]="imagePath" />
+              <div *ngIf="editMode" class="overlay">Clique alterar a imagem!</div>
+          </div>
+          <input type="file" accept="image/png, image/jpeg" #fileInput (change)="onImageSelected($event)"
+              [disabled]="!editMode" style="display:none" class="image2">
         </div>
       </div>
-  
       <!-- Formulário do responsável -->
-      <div class="col-md-8">
-        <form>
+      <div>
+        <form #representanteForm="ngForm" (ngSubmit)="onSubmit()">
+          <!-- RG -->
           <div class="form-group">
-            <label for="nome-completo">Nome Completo</label>
-            <input type="text" class="form-control" id="nome-completo" placeholder="Digite o nome completo" required>
+            <label for="rg">RG</label>
+            <input type="text" class="form-control" name="rg" id="rg" [(ngModel)]="rg" placeholder="Digite o RG" required>
           </div>
+  
+          <!-- Logradouro -->
           <div class="form-group">
-            <label for="endereco">Endereço</label>
-            <input type="text" class="form-control" id="endereco" placeholder="Digite o endereço" required>
+            <label for="Logradouro">Logradouro</label>
+            <input type="text" class="form-control" name="logradouro" id="logradouro" [(ngModel)]="logradouro" placeholder="Digite o logradouro" required>
           </div>
+  
+          <!-- Número -->
           <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" class="form-control" id="email" placeholder="Digite o e-mail" required>
+            <label for="Numero">Número</label>
+            <input type="text" class="form-control" name="numero" id="numero" [(ngModel)]="numero" placeholder="Digite o número" required>
           </div>
+  
+          <!-- Telefone -->
           <div class="form-group">
             <label for="telefone">Telefone</label>
-            <input type="tel" class="form-control" id="telefone" placeholder="Digite o telefone" required>
+            <input type="tel" class="form-control" name="telefone" id="telefone" [(ngModel)]="telefone" placeholder="Digite o telefone" required>
           </div>
+  
+          <!-- CPF -->
           <div class="form-group">
             <label for="cpf">CPF</label>
-            <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" required>
+            <input type="text" class="form-control" name="cpf" id="cpf" [(ngModel)]="cpf" placeholder="Digite o CPF" required>
           </div>
+  
+          <!-- Estado Civil (com nome no grupo de radio buttons) -->
           <div class="form-group">
-            <label for="estado-civil">Estado Civil</label>
-            <input type="text" class="form-control" id="estado-civil" placeholder="Digite o estado civil" required>
+            <label for="EstadoCivil">Informe o Estado-civil:</label>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio1" name="estadoCivil" value="solteiro(a)" [(ngModel)]="estadoCivil" checked>solteiro(a)
+              <label class="form-check-label" for="radio1"></label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio2" name="estadoCivil" value="casado(a)" [(ngModel)]="estadoCivil">casado(a)
+              <label class="form-check-label" for="radio2"></label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio3" name="estadoCivil" value="divorciado(a)" [(ngModel)]="estadoCivil">divorciado(a)
+              <label class="form-check-label" for="radio3"></label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio4" name="estadoCivil" value="viuvo(a)" [(ngModel)]="estadoCivil">viuvo(a)
+              <label class="form-check-label" for="radio4"></label>
+            </div>
           </div>
+  
           <div class="form-group">
             <label for="documento">Documento Comprobatório</label>
             <input type="file" class="form-control-file" id="documento" required>
           </div>
-          
+  
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="termos" required>
             <label class="form-check-label" for="termos">
-                O responsável legal declara ter lido, entendido todas as regras, condições e obrigações estabelecidas no presente termo, bem como autoriza e consente expressamente a divulgação de seus dados nos termos da LGPD (Lei Geral de Proteção de Dados).
+              O responsável legal declara ter lido, entendido todas as regras, condições e obrigações estabelecidas no presente termo, bem como autoriza e consente expressamente a divulgação de seus dados nos termos da LGPD (Lei Geral de Proteção de Dados).
             </label>
           </div>
-          
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-danger mr-2">Negar</button>
-            <button type="submit" class="btn btn-success">Autorizar</button>
+  
+          <!-- Modal de Confirmação -->
+          <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação de Exclusão</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Tem certeza que deseja excluir a sua conta?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" (click)="confirmDelete()">Confirmar</button>
+                </div>
+              </div>
+            </div>
           </div>
+  
+  
+  
+        <!-- O resto do seu formulário -->
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-success mr-2" (click)="editar()">Gravar</button>
+          <button type="button" class="btn btn-primary mr-2" (click)="ativarEdit()">Editar</button>
+          <button type="button" class="btn btn-warning" (click)="openDeleteModal()">Excluir</button>
+        </div>
         </form>
       </div>
     </div>
   </div>
+</div>
+
+<div id="repFormEdit" *ngIf="editando">
+  <div class="container col-6 col-md-8">
+    <div class="row">
+  
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+      <div class="alert alert-danger" *ngFor="let erro of errors">
+        {{ erro }}
+      </div>
+      <!-- Foto do responsável -->
+      <div>
+        <div class="image-container-right2">
+          <div class="image-container2" (click)="editMode ? fileInput.click() : null">
+              <img id="selectedImage" class="user-image-right" [src]="imagePath" />
+              <div *ngIf="editMode" class="overlay">Clique alterar a imagem!</div>
+          </div>
+          <input type="file" accept="image/png, image/jpeg" #fileInput (change)="onImageSelected($event)"
+              [disabled]="!editMode" style="display:none" class="image2">
+        </div>
+      </div>
+  
+      <!-- Formulário do responsável -->
+      <div>
+        <form #representanteForm="ngForm" (ngSubmit)="onSubmit()">
+
+
+          <div class="form-group">
+              <label for="nome" class="small mb-1">Nome</label>
+              <input type="text" name="nome" id="nome"
+                  [(ngModel)]="nome" autocomplete="off"
+                  class="form-control py-4"
+                  placeholder="Digite seu nome completo" />
+          </div>
+          <div class="form-group">
+              <label for="email" class="small mb-1">Email</label>
+              <input type="text" name="email" id="email"
+                  [(ngModel)]="email" autocomplete="off"
+                  class="form-control py-4"
+                  placeholder="Digite seu email" />
+          </div>
+          <div class="form-group">
+              <label for="senha" class="small mb-1">Senha</label>
+              <input type="password" name="senha" id="senha"
+                  [(ngModel)]="senha"
+                  class="form-control py-4"
+                  placeholder="Digite sua Senha" />
+          </div>
+          
+          <!-- RG -->
+          <div class="form-group">
+            <label for="rg">RG</label>
+            <input type="text" class="form-control" name="rg" id="rg" [(ngModel)]="rg" placeholder="Digite o RG" required>
+          </div>
+  
+          <!-- Logradouro -->
+          <div class="form-group">
+            <label for="Logradouro">Logradouro</label>
+            <input type="text" class="form-control" name="logradouro" id="logradouro" [(ngModel)]="logradouro" placeholder="Digite o logradouro" required>
+          </div>
+  
+          <!-- Número -->
+          <div class="form-group">
+            <label for="Numero">Número</label>
+            <input type="text" class="form-control" name="numero" id="numero" [(ngModel)]="numero" placeholder="Digite o número" required>
+          </div>
+  
+          <!-- Telefone -->
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="tel" class="form-control" name="telefone" id="telefone" [(ngModel)]="telefone" placeholder="Digite o telefone" required>
+          </div>
+  
+          <!-- CPF -->
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" class="form-control" name="cpf" id="cpf" [(ngModel)]="cpf" placeholder="Digite o CPF" required>
+          </div>
+  
+          <!-- Estado Civil (com nome no grupo de radio buttons) -->
+          <div class="form-group">
+            <label for="EstadoCivil">Informe o Estado-civil:</label>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio1" name="estadoCivil" value="solteiro(a)" [(ngModel)]="estadoCivil" checked>solteiro(a)
+              <label class="form-check-label" for="radio1"></label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio2" name="estadoCivil" value="casado(a)" [(ngModel)]="estadoCivil">casado(a)
+              <label class="form-check-label" for="radio2"></label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio3" name="estadoCivil" value="divorciado(a)" [(ngModel)]="estadoCivil">divorciado(a)
+              <label class="form-check-label" for="radio3"></label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio4" name="estadoCivil" value="viuvo(a)" [(ngModel)]="estadoCivil">viuvo(a)
+              <label class="form-check-label" for="radio4"></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="genero">Qual o seu gênero</label>
+          
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio1" name="genero" [(ngModel)]="genero" value="outro" checked>Outro
+              <label class="form-check-label" for="radio1"></label>
+            </div>
+          
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio2" name="genero" [(ngModel)]="genero" value="masculino">Masculino
+              <label class="form-check-label" for="radio2"></label>
+            </div>
+          
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio3" name="genero" [(ngModel)]="genero" value="feminino">Feminino
+              <label class="form-check-label" for="radio3"></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="documento">Documento Comprobatório</label>
+            <input type="file" class="form-control-file" id="documento" required>
+          </div>
+  
+          <div class="form-check">
+            <label class="form-check-label" for="termos">
+              O responsável legal declara ter lido, entendido todas as regras, condições e obrigações estabelecidas no presente termo, bem como autoriza e consente expressamente a divulgação de seus dados nos termos da LGPD (Lei Geral de Proteção de Dados).
+            </label>
+          </div>
+  
+          <!-- Modal de Confirmação -->
+          <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação de Exclusão</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Tem certeza que deseja excluir a sua conta?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" (click)="confirmDelete()">Confirmar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+  
+        <!-- O resto do seu formulário -->
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary mr-2" (click)="editar()">Salvar</button>
+          <button type="button" class="btn btn-danger" (click)="desativarEdit()">Voltar</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

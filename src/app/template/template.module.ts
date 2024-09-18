@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
+import { ResponsiveSideBarComponent } from './responsive-side-bar/responsive-side-bar.component';
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    ResponsiveSideBarComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    ResponsiveSideBarComponent
   ]
 })
 export class TemplateModule { }

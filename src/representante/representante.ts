@@ -1,9 +1,15 @@
 export class Representante{
-    codigo: number;
     nome: string;
-    endereco: string;
-    telefone: string;
+    email: string;
+    senha: string;
+    genero: string;
+   
     cpf: string;
-    estadoCivil: string
+    rg: string;
+    logradouro: string;
+    numero: number;
+    telefone: string;
+    estadoCivil: string;
+    foto: string;
 
 }

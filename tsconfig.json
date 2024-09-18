@@ -6,6 +6,9 @@
 
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
+    "paths": {
+      "@env/*": ["src/environments/*"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,

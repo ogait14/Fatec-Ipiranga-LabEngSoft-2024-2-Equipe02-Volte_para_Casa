@@ -1,0 +1,97 @@
+<div class="bg-primary"></div>
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">
+                                    {{'Cadastrar'}}
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-success" *ngIf="mensagemSucesso">
+                                    {{ mensagemSucesso }}
+                                </div>
+                                <div class="alert alert-danger" *ngFor="let erro of errors">
+                                    {{ erro }}
+                                </div>
+
+                                
+
+                                <form #cadastroForm="ngForm" (ngSubmit)="onSubmit()">
+                                    <div class="form-group">
+                                        <label for="nome" class="small mb-1">Nome</label>
+                                        <input type="text" name="nome" id="nome"
+                                            [(ngModel)]="nome" autocomplete="off"
+                                            class="form-control py-4"
+                                            placeholder="Digite seu nome completo" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="small mb-1">Email</label>
+                                        <input type="text" name="email" id="email"
+                                            [(ngModel)]="email" autocomplete="off"
+                                            class="form-control py-4"
+                                            placeholder="Digite seu email" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="senha" class="small mb-1">Senha</label>
+                                        <input type="password" name="senha" id="senha"
+                                            [(ngModel)]="senha"
+                                            class="form-control py-4"
+                                            placeholder="Digite sua Senha" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="small mb-1">Confirme sua senha</label>
+                                        <input type="password" name="senhaConfirmação"
+                                           id="senhaConfirmação"
+                                            class="form-control py-4"
+                                            placeholder="Confirme sua Senha" />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="genero">Qual o seu gênero</label>
+                                      
+                                        <div class="form-check">
+                                          <input type="radio" class="form-check-input" id="radio1" name="genero" [(ngModel)]="genero" value="outro" checked>Outro
+                                          <label class="form-check-label" for="radio1"></label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          <input type="radio" class="form-check-input" id="radio2" name="genero" [(ngModel)]="genero" value="masculino">Masculino
+                                          <label class="form-check-label" for="radio2"></label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          <input type="radio" class="form-check-input" id="radio3" name="genero" [(ngModel)]="genero" value="feminino">Feminino
+                                          <label class="form-check-label" for="radio3"></label>
+                                        </div>
+                                      </div>
+
+                                    <p class="terms">Ao clicar em Cadastrar-se, você concorda com nossos Termos, 
+                                        Política de Privacidade e Política de Cookies. Você poderá receber notificações 
+                                        por SMS e cancelar isso quando quiser.</p>
+                                    
+                                    <div class="action-buttons">  
+                                        <button type="submit" class="btn btn-success" (click)="cadastrar()">
+                                            Cadastrar
+                                        </button>
+                                        <button routerLink="/login" class="btn btn-danger">
+                                            Voltar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="card-footer text-center">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
